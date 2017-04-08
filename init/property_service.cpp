@@ -1178,6 +1178,9 @@ void PropertyLoadBootDefaults() {
         }
     }
 
+    // Weaken property override security during execution of the vendor init extension
+    weaken_prop_override_security = true;
+
     // Update with vendor-specific property runtime overrides
     vendor_load_properties();
 
@@ -1186,6 +1189,9 @@ void PropertyLoadBootDefaults() {
     property_derive_build_fingerprint();
     property_derive_legacy_build_fingerprint();
     property_initialize_ro_cpu_abilist();
+
+    // Restore the normal property override security after init extension is executed
+    weaken_prop_override_security = false;
 
     update_sys_usb_config();
 
